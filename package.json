@@ -1,0 +1,7 @@
+{
+  "name": "mycontacts",
+  "description": "API to store contacts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT"
+}
