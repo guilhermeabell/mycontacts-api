@@ -12,7 +12,9 @@ const contacts = [
 
 class ContactsRepository {
   findAll() {
-    return contacts;
+    return new Promise((resolve, reject) => {
+      resolve(contacts); // Acessando Data Source
+    });
   }
 }
 
