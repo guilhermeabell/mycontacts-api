@@ -8,9 +8,18 @@ class ContactController {
     res.json(contacts);
   }
 
-  show() {
+  async show(req, res) {
     // Obter um registro
+    const { id } = req.params;
+    const contact = await ContactsRepository.findById(id);
 
+    if (!contact) {
+      res.status(404).json({ error: 'User not found' });
+    } else {
+      res.json(contact);
+    }
+
+    res.json(req.params);
   }
 
   store() {
@@ -21,8 +30,20 @@ class ContactController {
     // Editar um registro
   }
 
-  delete() {
+  async delete(req, res) {
     // Deletar um registro
+    const { id } = req.params;
+
+    const contact = await ContactsRepository.findById(id);
+
+    if (!contact) {
+      // 404: Not found
+      res.status(404).json({ error: 'User not found' });
+    }
+
+    await ContactsRepository.delete(id);
+    // 204: No Content
+    res.sendStatus(204);
   }
 }
 
