@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable camelcase */
 const ContactsRepository = require('../repositories/ContactsRepository');
 
 class ContactController {
@@ -22,8 +24,30 @@ class ContactController {
     res.json(req.params);
   }
 
-  store() {
+  async store(req, res) {
     // Criar novo registro
+    const {
+      name, email, phone, category_id,
+    } = req.body;
+
+    if (!name) {
+      return res.status(400).json({ error: 'Name is required' });
+    }
+
+    const contactsExists = await ContactsRepository.findByEmail(email);
+
+    if (contactsExists) {
+      return res.status(400).json({ error: 'This e-mail is already in use' });
+    }
+
+    const contact = await ContactsRepository.create({
+      name,
+      email,
+      phone,
+      category_id,
+    });
+
+    res.json(contact);
   }
 
   update() {

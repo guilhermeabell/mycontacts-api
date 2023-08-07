@@ -29,10 +29,35 @@ class ContactsRepository {
     });
   }
 
+  findByEmail(email) {
+    return new Promise((resolve) => {
+      const foundContact = contacts.find((contact) => contact.email === email);
+      resolve(foundContact);
+    });
+  }
+
   delete(id) {
     return new Promise((resolve) => {
       contacts = contacts.filter((contact) => contact.id !== id);
       resolve();
+    });
+  }
+
+  create({
+    name, email, phone, category_id,
+  }) {
+    return new Promise((resolve) => {
+      const newContact = {
+        id: v4(),
+        name,
+        email,
+        phone,
+        category_id,
+      };
+
+      contacts.push(newContact);
+
+      resolve(newContact);
     });
   }
 }
