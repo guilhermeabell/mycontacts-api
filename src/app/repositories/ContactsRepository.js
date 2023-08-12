@@ -21,7 +21,7 @@ let contacts = [
 
 class ContactsRepository {
   async findAll() {
-    const rows = await db.query('SELECT * from contacts');
+    const rows = await db.query('SELECT * from contacts ORDER BY name ASC');
     return rows;
   }
 
